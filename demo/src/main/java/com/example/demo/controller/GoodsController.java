@@ -19,11 +19,17 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
+    @PostMapping("/insert")
+    public JsonOut<Goods> insert(){
+        JsonOut out = new JsonOut(200,"成功");
+        out.setData(goodsService.selectGoods());
+        return out;
+    }
 
     @PostMapping("/select")
     public JsonOut<Goods> selectGoods(){
         JsonOut out = new JsonOut(200,"成功");
-        out.setData(goodsService.selectGoods());
+        out.setData(goodsService.selectGoodsV2("goods"));
         return out;
     }
 }
