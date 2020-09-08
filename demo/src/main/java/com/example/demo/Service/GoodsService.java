@@ -2,6 +2,7 @@ package com.example.demo.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ctc.wstx.util.StringUtil;
 import com.example.demo.entity.Goods;
 import com.example.demo.mapper.GoodsMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
  * @Date：2020/8/31 10:58
  */
 @Service
+@Cacheable
 public class GoodsService {
 
     @Autowired
@@ -28,17 +30,25 @@ public class GoodsService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Cacheable(key = "goods",value = "good")
     public Goods selectGoods(){
         Goods goods = goodsMapper.selectByPrimaryKey((long)1);
-       // redisTemplate.opsForValue().set("goods", JSON.toJSONString(goods));
+        redisTemplate.opsForValue().set("goods"+goods.getCategoryId(), JSON.toJSONString(goods));
         return goods;
     }
 
-    @Cacheable(key = "goods",value = "good")
+
     public Goods selectGoodsV2(String name){
-        String goods = redisTemplate.opsForValue().get(name);
         Goods goods1 = null;
+        // 查询redis缓存
+        String goods = redisTemplate.opsForValue().get("goods" + name);
+        if (goods == null){
+            // 查数据库 sql
+            goods1 = goodsMapper.selectByPrimaryKey((long)1);
+            //查出来的数据存入redis
+            redisTemplate.opsForValue().set("goods"+goods1.getName(), JSON.toJSONString(goods));
+            return goods1;
+        }
+        // 缓存有数据，直接取出来
         try {
             goods1 = objectMapper.readValue(goods , new TypeReference<Goods>(){});
         } catch (JsonProcessingException e) {
