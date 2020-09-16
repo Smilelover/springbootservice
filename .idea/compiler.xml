@@ -2,7 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -16,7 +15,13 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="eurekaserver" target="1.8" />
+      <module name="demo" target="1.8" />
+      <module name="eureka-server" target="1.8" />
+      <module name="feign" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="hystrix" target="1.8" />
+      <module name="ribbon" target="1.8" />
+      <module name="springbootserivce" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

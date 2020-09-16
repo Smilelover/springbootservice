@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.OperatingRecordLogMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.OperatingRecordLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="api_uri" jdbcType="VARCHAR" property="apiUri" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="request_type" jdbcType="VARCHAR" property="requestType" />
+    <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
+    <result column="time_consuming" jdbcType="BIGINT" property="timeConsuming" />
+    <result column="response_code" jdbcType="INTEGER" property="responseCode" />
+    <result column="response_message" jdbcType="VARCHAR" property="responseMessage" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.demo.entity.OperatingRecordLogWithBLOBs">
+    <result column="request_param" jdbcType="LONGVARCHAR" property="requestParam" />
+    <result column="response_param" jdbcType="LONGVARCHAR" property="responseParam" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, token, member_id, api_uri, `method`, request_type, ip_address, time_consuming, 
+    response_code, response_message, `status`, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    request_param, response_param
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from operating_record_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from operating_record_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.OperatingRecordLogWithBLOBs">
+    insert into operating_record_log (id, token, member_id, 
+      api_uri, `method`, request_type, 
+      ip_address, time_consuming, response_code, 
+      response_message, `status`, create_time, 
+      request_param, response_param)
+    values (#{id,jdbcType=INTEGER}, #{token,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
+      #{apiUri,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{requestType,jdbcType=VARCHAR}, 
+      #{ipAddress,jdbcType=VARCHAR}, #{timeConsuming,jdbcType=BIGINT}, #{responseCode,jdbcType=INTEGER}, 
+      #{responseMessage,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{requestParam,jdbcType=LONGVARCHAR}, #{responseParam,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.OperatingRecordLogWithBLOBs">
+    insert into operating_record_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="token != null">
+        token,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="apiUri != null">
+        api_uri,
+      </if>
+      <if test="method != null">
+        `method`,
+      </if>
+      <if test="requestType != null">
+        request_type,
+      </if>
+      <if test="ipAddress != null">
+        ip_address,
+      </if>
+      <if test="timeConsuming != null">
+        time_consuming,
+      </if>
+      <if test="responseCode != null">
+        response_code,
+      </if>
+      <if test="responseMessage != null">
+        response_message,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="requestParam != null">
+        request_param,
+      </if>
+      <if test="responseParam != null">
+        response_param,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="apiUri != null">
+        #{apiUri,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="requestType != null">
+        #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null">
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="timeConsuming != null">
+        #{timeConsuming,jdbcType=BIGINT},
+      </if>
+      <if test="responseCode != null">
+        #{responseCode,jdbcType=INTEGER},
+      </if>
+      <if test="responseMessage != null">
+        #{responseMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestParam != null">
+        #{requestParam,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseParam != null">
+        #{responseParam,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.OperatingRecordLogWithBLOBs">
+    update operating_record_log
+    <set>
+      <if test="token != null">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="apiUri != null">
+        api_uri = #{apiUri,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        `method` = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="requestType != null">
+        request_type = #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null">
+        ip_address = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="timeConsuming != null">
+        time_consuming = #{timeConsuming,jdbcType=BIGINT},
+      </if>
+      <if test="responseCode != null">
+        response_code = #{responseCode,jdbcType=INTEGER},
+      </if>
+      <if test="responseMessage != null">
+        response_message = #{responseMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestParam != null">
+        request_param = #{requestParam,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseParam != null">
+        response_param = #{responseParam,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.demo.entity.OperatingRecordLogWithBLOBs">
+    update operating_record_log
+    set token = #{token,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=INTEGER},
+      api_uri = #{apiUri,jdbcType=VARCHAR},
+      `method` = #{method,jdbcType=VARCHAR},
+      request_type = #{requestType,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      time_consuming = #{timeConsuming,jdbcType=BIGINT},
+      response_code = #{responseCode,jdbcType=INTEGER},
+      response_message = #{responseMessage,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      request_param = #{requestParam,jdbcType=LONGVARCHAR},
+      response_param = #{responseParam,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.OperatingRecordLog">
+    update operating_record_log
+    set token = #{token,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=INTEGER},
+      api_uri = #{apiUri,jdbcType=VARCHAR},
+      `method` = #{method,jdbcType=VARCHAR},
+      request_type = #{requestType,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      time_consuming = #{timeConsuming,jdbcType=BIGINT},
+      response_code = #{responseCode,jdbcType=INTEGER},
+      response_message = #{responseMessage,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
